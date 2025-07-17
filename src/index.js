@@ -4,6 +4,7 @@
 // console.log("API Key:", process.env.WEATHER_API_KEY);
 
 async function fetchWeatherData(city) {
+  // Fetch weather data from the Visual Crossing API
   const apiKey = process.env.WEATHER_API_KEY;
   const response = await fetch(
     `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?key=${apiKey}`,
@@ -11,25 +12,41 @@ async function fetchWeatherData(city) {
   );
   const weatherData = await response.json();
 
-  console.log(weatherData);
-
-  console.log("---Weather Data Fetched---");
-
-  console.log(weatherData.currentConditions.temp);
-  console.log(weatherData.currentConditions.feelslike);
-  console.log(weatherData.currentConditions.precip);
+  console.log("Raw weather data:", weatherData);
 
   return weatherData;
 }
 
-function checkForAlerts(weatherData) {
+function splitAlerts(weatherData) {
+  // if there are any weather alerts, log them
   if (weatherData.alerts && weatherData.alerts.length > 0) {
-    weatherData.alerts.forEach((alert) => {
-      console.log(alert.event); // This will log each alert's event
-    });
+    return weatherData.alerts;
   } else {
-    console.log("No weather alerts available");
+    return [];
   }
 }
 
-fetchWeatherData("New York");
+function processJSON(weatherData) {
+  // creates a weather object with the current conditions of desired city
+  const weatherObject = {
+    temperature: weatherData.currentConditions.temp,
+    feelsLike: weatherData.currentConditions.feelslike,
+    precipitation: weatherData.currentConditions.precip,
+    alerts: splitAlerts(weatherData),
+  };
+
+  return weatherObject;
+}
+
+async function getWeather(city) {
+  try {
+    const weatherData = await fetchWeatherData(city);
+    const processedData = processJSON(weatherData);
+    console.log("Processed weather Object:", processedData);
+    return processedData;
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+  }
+}
+
+getWeather("New York");
