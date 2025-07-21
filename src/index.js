@@ -1,6 +1,8 @@
 // src/index.js
 import { getWeather } from "./weatherService";
-// import { updateWeatherDisplay, setupSearchForm } from "./domController";
+import { submitForm } from "./domController";
 import "./style.css";
 
-getWeather("New York");
+// getWeather("New York");
+
+submitForm();
