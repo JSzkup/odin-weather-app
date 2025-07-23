@@ -2,13 +2,6 @@
 // Handle the DOM manipulation for displaying weather data.
 
 import { getWeather } from "./weatherService";
-import sunIcon from "./assets/icons/sun.svg";
-import cloudIcon from "./assets/icons/cloud.svg";
-import cloudRainIcon from "./assets/icons/cloud-rain.svg";
-import cloudSnowIcon from "./assets/icons/cloud-snow.svg";
-import cloudLightningIcon from "./assets/icons/cloud-lightning.svg";
-import windIcon from "./assets/icons/wind.svg";
-import xIcon from "./assets/icons/x.svg";
 
 function submitForm() {
   // submits the html form with the city input
@@ -39,48 +32,61 @@ function createListOfWeatherHTMLElements(weatherData) {
   return null;
 }
 
-function getWeatherIcon(iconString) {
+async function getWeatherIcon(iconString) {
   // dynamically selects the icon based on the icon string
+
+  let iconPath = "";
 
   // Convert to lowercase for case-insensitive matching
   const condition = iconString ? iconString.toLowerCase() : "";
 
   // Match icon based on condition substring
   if (condition.includes("clear") || condition.includes("sunny")) {
-    return sunIcon;
+    iconPath = "sun";
   } else if (
     condition.includes("rain") ||
     condition.includes("drizzle") ||
     condition.includes("shower")
   ) {
-    return cloudRainIcon;
+    iconPath = "cloud-rain";
   } else if (
     condition.includes("snow") ||
     condition.includes("flurr") ||
     condition.includes("sleet")
   ) {
-    return cloudSnowIcon;
+    iconPath = "cloud-snow";
   } else if (
     condition.includes("thunder") ||
     condition.includes("lightning") ||
     condition.includes("storm")
   ) {
-    return cloudLightningIcon;
+    iconPath = "cloud-lightning";
   } else if (
     condition.includes("cloud") ||
     condition.includes("overcast") ||
     condition.includes("fog")
   ) {
-    return cloudIcon;
+    iconPath = "cloud";
   } else if (condition.includes("wind") || condition.includes("breez")) {
-    return windIcon;
+    iconPath = "wind";
+  } else {
+    // fallback icon
+    iconPath = "x";
   }
 
-  // fallback icon if no conditions match
-  return xIcon;
+  // Dynamically import the icon
+  try {
+    const iconModule = await import(`./assets/icons/${iconPath}.svg`);
+    return iconModule.default;
+  } catch (error) {
+    console.error(`Failed to load icon: ${iconPath}`, error);
+    // Fallback to x icon if there's an error
+    const fallbackModule = await import("./assets/icons/x.svg");
+    return fallbackModule.default;
+  }
 }
 
-function createWeatherIcon(weatherData) {
+async function createWeatherIcon(weatherData) {
   const weatherIconContainer = document.getElementById("weather-icon");
 
   if (weatherIconContainer) {
@@ -88,7 +94,7 @@ function createWeatherIcon(weatherData) {
     weatherIconContainer.innerHTML = "";
 
     // Get the appropriate icon based on weather condition
-    const iconToUse = getWeatherIcon(weatherData.icon);
+    const iconToUse = await getWeatherIcon(weatherData.icon);
 
     // Create and append the image
     const iconImg = document.createElement("img");
@@ -98,7 +104,7 @@ function createWeatherIcon(weatherData) {
   }
 }
 
-function updateWeatherDisplay(weatherData) {
+async function updateWeatherDisplay(weatherData) {
   // Update the DOM with the weather data
 
   const elements = createListOfWeatherHTMLElements(weatherData);
@@ -109,7 +115,7 @@ function updateWeatherDisplay(weatherData) {
   elements.precipitation.textContent = `Precipitation: ${weatherData.precipitation} inches`;
   elements.windSpeed.textContent = `Wind Speed: ${weatherData.windSpeed} mph`;
 
-  createWeatherIcon(weatherData);
+  await createWeatherIcon(weatherData);
 }
 
 export { submitForm, updateWeatherDisplay };
