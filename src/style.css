@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#weather-display {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+#temperature {
+  grid-row: 1 / span 3;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(2rem, 15vw, 10rem);
+}
+
+#location {
+  font-size: 2.5em;
+}
+
+#weather-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#weather-icon img {
+  width: clamp(4rem, 20vw, 12rem);
+  height: auto;
+}

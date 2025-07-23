@@ -109,7 +109,7 @@ async function updateWeatherDisplay(weatherData) {
 
   const elements = createListOfWeatherHTMLElements(weatherData);
 
-  elements.temperature.textContent = `Temperature: ${weatherData.temperature}°F`;
+  elements.temperature.textContent = `${weatherData.temperature}°F`;
   elements.location.textContent = `Location: ${weatherData.location}`;
   elements.feelsLike.textContent = `Feels Like: ${weatherData.feelsLike}°F`;
   elements.precipitation.textContent = `Precipitation: ${weatherData.precipitation} inches`;
