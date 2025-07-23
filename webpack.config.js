@@ -35,6 +35,13 @@ module.exports = {
         test: /\.html$/,
         use: ["html-loader"],
       },
+      {
+        test: /\.svg$/,
+        type: "asset/resource",
+        generator: {
+          filename: "assets/icons/[name][ext]",
+        },
+      },
     ],
   },
   plugins: [
