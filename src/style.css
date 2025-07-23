@@ -3,6 +3,9 @@
   margin: 0;
   padding: 0;
 }
+body {
+  height: 100vh;
+}
 
 header {
   display: flex;
@@ -10,10 +13,25 @@ header {
   align-items: center;
 }
 
+#weather-display-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 90vh;
+}
+
 #weather-display {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, 1fr);
+
+  /* width: 20vw; */
+  /* margin: 0 auto; */
+}
+
+.weather-display-elements {
+  white-space: nowrap;
 }
 
 #temperature {
