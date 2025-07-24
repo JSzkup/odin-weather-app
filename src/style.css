@@ -23,6 +23,21 @@ header {
   background-color: #e6e6e6;
 }
 
+#weather-form > * {
+  font-size: 1.2rem;
+}
+
+form input {
+  border-radius: 5px;
+}
+
+form button {
+  background-color: rgb(90, 189, 234);
+  color: white;
+
+  border-radius: 5px;
+}
+
 #weather-display-area {
   display: flex;
   flex-direction: column;
