@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkodin_weather_app=self.webpackChunkodin_weather_app||[]).push([[486],{486:(s,e,p)=>{s.exports=p.p+"assets/icons/cloud-snow.svg"}}]);

@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@500&display=swap");
-
+@import url(https://fonts.googleapis.com/css2?family=Fredoka:wght@500&display=swap);
 * {
   box-sizing: border-box;
   margin: 0;
@@ -89,3 +88,4 @@ form button {
   width: clamp(4rem, 20vw, 12rem);
   height: auto;
 }
+
